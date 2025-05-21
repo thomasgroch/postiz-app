@@ -17,6 +17,9 @@ COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY apps/**/package.json ./apps/
 COPY libraries/**/package.json ./libraries/
 
+# Copy build.plugins.js which is needed for postinstall
+COPY build.plugins.js ./
+
 # Install dependencies, allowing lockfile updates if needed
 RUN pnpm install --no-frozen-lockfile
 
