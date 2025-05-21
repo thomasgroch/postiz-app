@@ -34,10 +34,8 @@ RUN corepack enable && corepack prepare pnpm@10.6.1 --activate
 
 WORKDIR /app
 
-# Copy from dependencies stage
+# Copy node_modules from dependencies stage
 COPY --from=dependencies /app/node_modules ./node_modules
-COPY --from=dependencies /app/apps ./apps
-COPY --from=dependencies /app/libraries ./libraries
 
 # Copy source files
 COPY . .
