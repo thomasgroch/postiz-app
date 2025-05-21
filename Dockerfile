@@ -2,7 +2,7 @@
 FROM node:20-alpine AS dependencies
 
 # Install system dependencies
-RUN apk add --no-cache g++ make python3 git ffmpeg sqlite3 openssl curl postgresql-client
+RUN apk add --no-cache g++ make python3 git ffmpeg sqlite openssl curl postgresql-client
 
 # Install pnpm
 RUN corepack enable && corepack prepare pnpm@10.6.1 --activate
@@ -49,7 +49,7 @@ RUN pnpm run build
 FROM node:20-alpine AS runner
 
 # Install production system dependencies
-RUN apk add --no-cache ffmpeg sqlite3 postgresql-client openssl curl bash supervisor caddy
+RUN apk add --no-cache ffmpeg sqlite postgresql-client openssl curl bash supervisor caddy
 
 # Install pnpm globally
 RUN corepack enable && corepack prepare pnpm@10.6.1 --activate
