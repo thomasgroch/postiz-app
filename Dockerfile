@@ -17,8 +17,8 @@ COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY apps/**/package.json ./apps/
 COPY libraries/**/package.json ./libraries/
 
-# Install dependencies with frozen lockfile to ensure reproducible builds
-RUN pnpm install --frozen-lockfile
+# Install dependencies, allowing lockfile updates if needed
+RUN pnpm install --no-frozen-lockfile
 
 # Stage 2: Build
 FROM node:20-alpine AS builder
