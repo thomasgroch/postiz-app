@@ -20,8 +20,8 @@ COPY libraries/**/package.json ./libraries/
 # Copy build.plugins.js which is needed for postinstall
 COPY build.plugins.js ./
 
-# Install dependencies, allowing lockfile updates if needed
-RUN pnpm install --no-frozen-lockfile
+# Install dependencies, ignoring scripts to run them later when all files are available
+RUN pnpm install --no-frozen-lockfile --ignore-scripts
 
 # Stage 2: Build
 FROM node:20-alpine AS builder
@@ -42,7 +42,8 @@ COPY --from=dependencies /app/libraries ./libraries
 # Copy source files
 COPY . .
 
-# Generate Prisma client
+# Run postinstall scripts manually after all files are copied
+RUN pnpm run update-plugins
 RUN pnpm prisma-generate
 
 # Build all applications
